@@ -1,0 +1,66 @@
+.content {
+  width: 100%;
+  padding: 2em 3em;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2em;
+  flex-wrap: wrap;
+}
+
+.time {
+  margin: 1em auto;
+  width: 100%;
+  text-align: center;
+  font-size: 3em;
+}
+
+.time-result {
+  text-align: center;
+  margin-top: 1em;
+}
+
+p {
+  font-size: medium;
+}
+
+.clocks {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+.clock {
+  width: calc(320px - 2em);
+}
+
+.setup {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+@media screen and (max-width: 380px) {
+  .content {
+    padding: 2em 1em;
+  }
+
+  .title {
+    gap: 1em;
+    justify-content: center;
+  }
+
+  .setup {
+    flex-direction: column;
+  }
+
+  p {
+    text-align: center;
+  }
+}

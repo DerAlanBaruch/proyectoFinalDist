@@ -1,0 +1,23 @@
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: min-content auto auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  gap: 1em;
+  padding: 2em 4em;
+  box-shadow: -1px 15px 30px -16px rgba(0,0,0,0.39);
+-webkit-box-shadow: -1px 15px 30px -16px rgba(0,0,0,0.39);
+-moz-box-shadow: -1px 15px 30px -16px rgba(0,0,0,0.39);
+}
+
+.header > h1 > span {
+  font-size: 20px;
+  margin-left: 0.5em;
+  font-weight: 500;
+}
