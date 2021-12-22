@@ -21,3 +21,15 @@
   margin-left: 0.5em;
   font-weight: 500;
 }
+
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.5em 3em;
+  background-color: #1b1f3b;
+}
+
+.footer > p {
+  color: white;
+}

@@ -20,8 +20,8 @@
                 (click)="calculateClocks()">
                 Calcular
             </button>
-            <button tuiButton type="button" appearance="secondary" class="tui-space_right-3 tui-space_bottom-3"
-                size="m">
+            <button tuiButton type="button" appearance="secondary" class="tui-space_right-3 tui-space_bottom-3" size="m"
+                (click)="resetClocks()">
                 Resetear
             </button>
         </div>
@@ -35,9 +35,9 @@
                 </p>
                 <h3 class="tui-island__title time">{{ getFormat(dates[n]) }}</h3>
                 <tui-input-time [formControl]="datesForm[n]" (change)="changeHour(n)">Hora</tui-input-time>
-                <p class="tui-island__paragraph time-result">
-                    Cristian: <strong>{{getFormat(dates[n])}}</strong> Berkeley:
-                    <strong>{{getFormat(dates[n])}}</strong>
+                <p class="tui-island__paragraph time-result" *ngIf="isSelected">
+                    Cristian: <strong>{{getFormat(calculatedDates.cristian[n])}}</strong> Berkeley:
+                    <strong>{{getFormat(calculatedDates.berkeley[n])}}</strong>
                 </p>
             </tui-island>
         </div>

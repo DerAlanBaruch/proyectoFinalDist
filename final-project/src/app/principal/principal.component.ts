@@ -19,6 +19,25 @@ export class PrincipalComponent implements OnInit {
     new Date(Date.now()),
     new Date(Date.now()),
   ];
+
+  calculatedDates = {
+    cristian: [
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+    ],
+    berkeley: [
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+      new Date(Date.now()),
+    ],
+  };
   datesForm: FormControl[] = [
     new FormControl(
       new TuiTime(this.dates[0].getHours(), this.dates[0].getMinutes())
@@ -35,7 +54,6 @@ export class PrincipalComponent implements OnInit {
           new TuiTime(this.dates[i].getHours(), this.dates[i].getMinutes())
         )
       );
-      //console.log(this.datesForm[i].value)
     }
   }
 
@@ -45,17 +63,36 @@ export class PrincipalComponent implements OnInit {
   }
 
   updateClocks(type: String) {
+    let cDates = this.calculatedDates;
     if (type == 'c') {
       console.log('Cristian');
+      this.dates = this.calculatedDates.cristian as Date[];
     }
     if (type == 'b') {
       console.log('Berkeley');
+      this.dates = this.calculatedDates.berkeley as Date[];
+    }
+    for (let i = 0; i < this.dates.length; i++) {
+      this.datesForm[i] = new FormControl(
+        new TuiTime(this.dates[i].getHours(), this.dates[i].getMinutes())
+      );
     }
     this.isSelected = false;
   }
 
   calculateClocks() {
     this.isSelected = true;
+  }
+
+  resetClocks() {
+    for (let i = 0; i < this.dates.length; i++) {
+      this.dates[i].setHours(0);
+      this.dates[i].setMinutes(0);
+      this.datesForm[i] = new FormControl(
+        new TuiTime(this.dates[i].getHours(), this.dates[i].getMinutes())
+      );
+    }
+    this.isSelected = false;
   }
 
   getFormat(d: Date) {
