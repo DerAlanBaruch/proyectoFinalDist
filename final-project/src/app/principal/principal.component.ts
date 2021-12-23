@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { TuiTime } from '@taiga-ui/cdk/date-time';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { ClocksService } from '../services/clocks.service';
 
 @Component({
   selector: 'app-principal',
@@ -11,44 +12,20 @@ import { es } from 'date-fns/locale';
 })
 export class PrincipalComponent implements OnInit {
   numbers: number[] = [0, 1, 2, 3, 4, 5];
-  dates: Date[] = [
-    new Date(Date.now()),
-    new Date(Date.now()),
-    new Date(Date.now()),
-    new Date(Date.now()),
-    new Date(Date.now()),
-    new Date(Date.now()),
-  ];
+  dates: Date[] = [];
 
-  calculatedDates = {
-    cristian: [
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-    ],
-    berkeley: [
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-      new Date(Date.now()),
-    ],
+  calculatedDates: { cristian: Date[]; berkeley: Date[] } = {
+    cristian: [],
+    berkeley: [], 
   };
-  datesForm: FormControl[] = [
-    new FormControl(
-      new TuiTime(this.dates[0].getHours(), this.dates[0].getMinutes())
-    ),
-  ];
+  datesForm: FormControl[] = [];
   isSelected: boolean = false;
 
-  constructor() {}
+  constructor(private clocksService: ClocksService) {}
 
   ngOnInit(): void {
-    for (let i = 1; i < this.dates.length; i++) {
+    this.dates = this.clocksService.getHours();
+    for (let i = 0; i < this.dates.length; i++) {
       this.datesForm.push(
         new FormControl(
           new TuiTime(this.dates[i].getHours(), this.dates[i].getMinutes())
@@ -60,10 +37,10 @@ export class PrincipalComponent implements OnInit {
   changeHour(n: number) {
     this.dates[n].setHours(this.datesForm[n].value?.hours);
     this.dates[n].setMinutes(this.datesForm[n].value?.minutes);
+    this.clocksService.setHour(n, this.dates[n]);
   }
 
   updateClocks(type: String) {
-    let cDates = this.calculatedDates;
     if (type == 'c') {
       console.log('Cristian');
       this.dates = this.calculatedDates.cristian as Date[];
@@ -72,6 +49,7 @@ export class PrincipalComponent implements OnInit {
       console.log('Berkeley');
       this.dates = this.calculatedDates.berkeley as Date[];
     }
+    this.clocksService.setHours(this.dates);
     for (let i = 0; i < this.dates.length; i++) {
       this.datesForm[i] = new FormControl(
         new TuiTime(this.dates[i].getHours(), this.dates[i].getMinutes())
@@ -81,6 +59,7 @@ export class PrincipalComponent implements OnInit {
   }
 
   calculateClocks() {
+    this.calculatedDates = this.clocksService.calculateAlgorithms();
     this.isSelected = true;
   }
 
@@ -92,10 +71,11 @@ export class PrincipalComponent implements OnInit {
         new TuiTime(this.dates[i].getHours(), this.dates[i].getMinutes())
       );
     }
+    this.clocksService.setHours(this.dates);
     this.isSelected = false;
   }
 
   getFormat(d: Date) {
-    return format(d, 'HH:mm', { locale: es });
+    return format(new Date(d), 'HH:mm', { locale: es });
   }
 }
